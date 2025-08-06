@@ -1,0 +1,44 @@
+[
+  {
+    "question": "What are the key skills for a data scientist?",
+    "response": "Key skills for a data scientist include:\n\n1. **Data Analysis**: The ability to analyze and interpret complex data sets.\n2. **Programming**: Proficiency in programming languages such as Python or R for data manipulation and analysis.\n3. **Statistical Knowledge**: Understanding of statistical methods and concepts to draw insights from data.\n4. **Communication Skills**: The ability to effectively communicate findings and insights to non-technical stakeholders.\n5. **Research Background**: Familiarity with research methodologies and the ability to apply them in data-driven projects.\n6. **Critical Thinking**: The capacity to question decisions and processes, and to learn from others' approaches.\n7. **Data Visualization**: Skills in creating visual representations of data to convey information clearly.\n\nThese skills combine to form a well-rounded data scientist who can not only analyze data but also communicate its significance effectively.",
+    "thumbs_up": true,
+    "timestamp": "2025-08-04T23:28:57.634439"
+  },
+  {
+    "question": "How important is mentoring in a data career?",
+    "response": "Mentoring can be very important in a data career as it provides guidance, support, and knowledge sharing from experienced professionals. It can help job seekers improve their skills, navigate challenges, and gain insights into the industry. Mentoring programs, like those mentioned at Databricks, can offer structured opportunities for learning and development, which can be particularly beneficial for those transitioning from other fields or looking to enhance their technical skills.",
+    "thumbs_up": true,
+    "timestamp": "2025-08-04T23:39:51.904602"
+  },
+  {
+    "question": "What are the common mistakes in building data teams?",
+    "response": "I don't know.",
+    "thumbs_up": false,
+    "timestamp": "2025-08-04T23:40:49.369708"
+  },
+  {
+    "question": "What is the themes in the podcast?",
+    "response": "The podcast features themes that involve exploring different opinions from various people, highlighting individual stories, and focusing on inspiring conversations. It aims to delve into interesting topics and showcase the enthusiasm of the guests.",
+    "thumbs_up": true,
+    "timestamp": "2025-08-05T00:07:51.035134"
+  },
+  {
+    "question": "What is the data science themes that is talked in the podcast?",
+    "response": "The podcast \"the data led professional\" primarily discusses data-related topics that are relevant for less technical people, particularly those in product growth, operations, and marketing roles. While it may touch on various data science themes, the focus is on making data concepts accessible to a broader audience rather than delving deeply into technical aspects. For more engineering-heavy topics, another podcast, DataTalks.Club, focuses on ML engineering, data engineering, and MLOps, which are more technical in nature.",
+    "thumbs_up": false,
+    "timestamp": "2025-08-05T00:08:23.986084"
+  },
+  {
+    "question": "List the data science themes that is talked in the podcast",
+    "response": "I don't know.",
+    "thumbs_up": false,
+    "timestamp": "2025-08-05T00:08:36.752280"
+  },
+  {
+    "question": "Tell me whats is the themes talked in the podcast",
+    "response": "I don't know.",
+    "thumbs_up": false,
+    "timestamp": "2025-08-05T00:09:11.254958"
+  }
+]

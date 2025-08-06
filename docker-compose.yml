@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  main_app:
+    build: .
+    container_name: llm_main_app
+    command: streamlit run app/main.py
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+      - ./models:/app/models
+    env_file:
+      - .env
+
+  dashboard:
+    build: .
+    container_name: llm_dashboard
+    command: streamlit run dashboard.py
+    ports:
+      - "8502:8501"
+    volumes:
+      - ./logs:/app/logs
+    env_file:
+      - .env

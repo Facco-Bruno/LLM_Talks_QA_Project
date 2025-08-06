@@ -6,7 +6,7 @@ BASE_URL = "https://datatalks.club/podcast.html"
 EPISODES_DIR = "data/raw"
 
 def fetch_episode_links():
-    print("🔍 Buscando episódios...")
+    print("🔍 Fetching episode links...")
     resp = requests.get(BASE_URL)
     soup = BeautifulSoup(resp.text, "html.parser")
     links = []
@@ -17,11 +17,11 @@ def fetch_episode_links():
             full_url = "https://datatalks.club" + href
             links.append(full_url)
 
-    print(f"✅ {len(links)} links encontrados")
+    print(f"✅ Found {len(links)} links.")
     return sorted(set(links))
 
 def download_transcript(url):
-    print(f"🔽 Baixando: {url}")
+    print(f"🔽 Downloading: {url}")
     try:
         resp = requests.get(url, timeout=10)
         soup = BeautifulSoup(resp.text, "html.parser")
@@ -31,7 +31,7 @@ def download_transcript(url):
 
         transcript_header = soup.find("h2", string="Transcript")
         if not transcript_header:
-            print(f"⚠️ Episódio {title} não tem seção de transcrição.")
+            print(f"⚠️ Episode {title} does not contain a transcript section.")
             return
 
         content = []
@@ -46,7 +46,7 @@ def download_transcript(url):
                     content.append(text)
 
         if not content:
-            print(f"⚠️ Episódio {title} não contém conteúdo útil.")
+            print(f"⚠️ Episode {title} contains no useful transcript content.")
             return
 
         text = "\n\n".join(content)
@@ -56,9 +56,9 @@ def download_transcript(url):
         with open(filename, "w", encoding="utf-8") as f:
             f.write(text)
 
-        print(f"💾 Salvo: {filename}")
+        print(f"💾 Saved: {filename}")
     except Exception as e:
-        print(f"❌ Erro ao processar {url}: {e}")
+        print(f"❌ Error processing {url}: {e}")
 
 def main():
     links = fetch_episode_links()
