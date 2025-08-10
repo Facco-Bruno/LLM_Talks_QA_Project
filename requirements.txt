@@ -1,0 +1,40 @@
+
+---
+
+# 2) requirements.txt (pinned)
+
+Crie/atualize `requirements.txt` (versões compatíveis com seu fluxo atual):
+
+```txt
+# Core
+langchain==0.1.17
+langchain-community==0.0.36
+openai==1.37.0
+python-dotenv==1.0.1
+tqdm==4.66.4
+
+# LLM eval metrics
+nltk==3.8.1
+rouge-score==0.1.2
+fuzzywuzzy==0.18.0
+python-Levenshtein==0.25.1
+
+# Vector / NLP
+faiss-cpu==1.8.0.post1
+sentence-transformers==2.2.2
+transformers<4.40.0
+huggingface-hub==0.15.1
+rank-bm25==0.2.2
+torch>=2.0.0
+
+# Web / UI / Scraping
+streamlit==1.36.0
+beautifulsoup4==4.12.3
+requests==2.32.3
+
+# Data viz for dashboard
+plotly==5.22.0
+pandas==2.2.2
+matplotlib==3.8.4
+seaborn==0.13.2
+wordcloud==1.9.3

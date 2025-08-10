@@ -17,46 +17,62 @@ if not os.path.exists(LOG_PATH):
     st.stop()
 
 with open(LOG_PATH, "r", encoding="utf-8") as f:
-    feedback = json.load(f)
+    data = json.load(f)
 
-df = pd.DataFrame(feedback)
+df = pd.DataFrame(data)
+if df.empty:
+    st.warning("No feedback entries.")
+    st.stop()
+
+# Normalize fields
 df["timestamp"] = pd.to_datetime(df["timestamp"])
 df["date"] = df["timestamp"].dt.date
 df["hour"] = df["timestamp"].dt.hour
+if "rewriting_enabled" not in df.columns:
+    df["rewriting_enabled"] = False
+if "thumbs_up" not in df.columns:
+    df["thumbs_up"] = False
 
-col1, col2 = st.columns(2)
+# Sidebar filters
+st.sidebar.header("Filters")
+use_rewriter = st.sidebar.selectbox("Rewriting enabled?", ["All", "Enabled", "Disabled"])
+if use_rewriter == "Enabled":
+    df = df[df["rewriting_enabled"] == True]
+elif use_rewriter == "Disabled":
+    df = df[df["rewriting_enabled"] == False]
 
-# === 1. Total feedbacks por dia
-with col1:
-    st.subheader("🗓️ Total feedbacks over time")
-    feedback_counts = df.groupby("date").size()
-    st.line_chart(feedback_counts)
+st.sidebar.write(f"Total items: {len(df)}")
 
-# === 2. Thumbs up vs down
-with col2:
-    st.subheader("👍 Feedback Distribution")
-    thumbs = df["thumbs_up"].value_counts().rename({True: "👍 Up", False: "👎 Down"})
-    st.bar_chart(thumbs)
+# Metrics
+col1, col2, col3 = st.columns(3)
+col1.metric("Total feedbacks", len(df))
+col2.metric("👍 Positive", int(df["thumbs_up"].sum()))
+col3.metric("👎 Negative", int((~df["thumbs_up"]).sum()))
 
-# === 3. Distribuição por hora
-st.subheader("⏰ Feedbacks by Hour of Day")
+# Thumbs rate by rewriting flag
+st.subheader("👍 Rate by Rewriting (Enabled vs Disabled)")
+if "rewriting_enabled" in df.columns and not df.empty:
+    agg = df.groupby("rewriting_enabled")["thumbs_up"].mean().rename({True: "Enabled", False: "Disabled"})
+    st.bar_chart(agg)
+
+# Over time
+st.subheader("🗓️ Feedbacks over time")
+daily = df.groupby("date").size()
+st.line_chart(daily)
+
+# By hour
+st.subheader("⏰ Feedbacks by hour of day")
 hourly = df.groupby("hour").size()
-fig, ax = plt.subplots()
-sns.barplot(x=hourly.index, y=hourly.values, ax=ax)
-ax.set_xlabel("Hour of Day")
-ax.set_ylabel("Feedback Count")
-st.pyplot(fig)
+st.bar_chart(hourly)
 
-# === 4. Perguntas mais frequentes
-st.subheader("❓ Most Frequent Questions")
-top_questions = df["question"].value_counts().head(10)
-st.dataframe(top_questions.rename("Count"))
+# Top questions
+st.subheader("❓ Most frequent original questions")
+if "original_question" in df.columns:
+    st.dataframe(df["original_question"].value_counts().head(15).rename("count"))
 
-# === 5. Nuvem de palavras das perguntas
-st.subheader("☁️ Word Cloud of Questions")
-text = " ".join(df["question"].tolist())
-wordcloud = WordCloud(width=800, height=400, background_color="white").generate(text)
-fig, ax = plt.subplots(figsize=(10, 5))
-ax.imshow(wordcloud, interpolation="bilinear")
-ax.axis("off")
-st.pyplot(fig)
+# Word cloud (original or rewritten)
+st.subheader("☁️ Word Cloud")
+cloud_source = st.radio("Use text from:", ["original_question", "rewritten_query"], horizontal=True)
+text = " ".join(df[cloud_source].dropna().astype(str).tolist())
+wc = WordCloud(width=900, height=400, background_color="white").generate(text)
+st.image(wc.to_array(), use_column_width=True)
